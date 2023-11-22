@@ -9,13 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
+        HStack {
             Card(isFaceUp: true)
             Card()
             Card()
             Card(isFaceUp: true)
-            Text("First Swift Test")
-                .foregroundColor(Color.blue)
         }
         .padding()
         .foregroundStyle(.orange)
@@ -23,18 +21,20 @@ struct ContentView: View {
 }
 
 struct Card: View {
-    var isFaceUp: Bool = false
+    @State var isFaceUp = false
     var body: some View {
-        if isFaceUp {
-            ZStack {
-                Rectangle().foregroundColor(.white)
-                Rectangle().strokeBorder(style: /*@START_MENU_TOKEN@*/StrokeStyle()/*@END_MENU_TOKEN@*/)
-                Text("Face UP!")
+        ZStack {
+            let base = RoundedRectangle(cornerRadius: 12) // LET makes a constant that will never change
+            if isFaceUp {
+                base.fill(.white)
+                base.strokeBorder(lineWidth: 2)
+                Text("👻").font(.largeTitle)
+            } else {
+                base.fill()
             }
-        } else {
-            ZStack {
-                Rectangle().foregroundColor(.orange)
-            }
+        }
+        .onTapGesture {
+            isFaceUp.toggle()
         }
     }
 }
